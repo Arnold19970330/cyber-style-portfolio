@@ -32,7 +32,7 @@ const Hero = () => {
           {/* Glitch effect name */}
           <div className="relative inline-block">
             <h1 
-              className="text-6xl md:text-8xl font-bold tracking-wider neon-text"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold tracking-wider neon-text whitespace-nowrap"
               style={{ fontFamily: 'Orbitron, sans-serif' }}
             >
               <span className="text-primary">GALACZI</span>
@@ -77,11 +77,11 @@ const Hero = () => {
           </div>
 
           {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce cursor-pointer" onClick={() => scrollToSection('about')}>
-            <span className="text-muted-foreground text-sm uppercase tracking-wider" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+          <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-[42%] lg:left-[48.5%] -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 animate-bounce cursor-pointer" onClick={() => scrollToSection('about')}>
+            <span className="text-muted-foreground text-xs sm:text-sm uppercase tracking-wider" style={{ fontFamily: 'Orbitron, sans-serif' }}>
               Scroll
             </span>
-            <ChevronDown className="w-6 h-6 text-primary" />
+            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />
           </div>
         </div>
       </div>

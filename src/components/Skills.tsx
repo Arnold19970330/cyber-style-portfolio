@@ -17,7 +17,7 @@ const Skills = () => {
     {
       icon: Database,
       title: "Backend & Database",
-      skills: ["Node.js", "PostgreSQL", "MongoDB", "GraphQL", "REST APIs", "Prisma"],
+      skills: ["Node.js", "PostgreSQL", "MongoDB", "GraphQL", "REST APIs", "Prisma", "Express", "PHP"],
       color: "cyber-purple"
     },
     {
@@ -29,7 +29,7 @@ const Skills = () => {
     {
       icon: Globe,
       title: "DevOps & Deployment",
-      skills: ["Docker", "CI/CD", "Vercel", "AWS", "GitHub Actions", "Nginx"],
+      skills: ["Docker", "CI/CD", "Vercel", "GitHub Actions"],
       color: "accent"
     },
     {
@@ -106,10 +106,9 @@ const Skills = () => {
           </div>
 
           {/* Stats Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+          <div className="flex flex-wrap justify-center gap-6 mt-16 justify-items-center">
             {[
-              { label: "Projects Completed", value: "50+" },
-              { label: "Happy Clients", value: "30+" },
+              /*{ label: "Happy Clients", value: "30+" },*/
               { label: "Code Commits", value: "10K+" },
               { label: "Coffee Consumed", value: "∞" }
             ].map((stat, index) => (

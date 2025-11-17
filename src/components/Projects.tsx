@@ -2,48 +2,75 @@ import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Projects = () => {
+  const getColorClasses = (color: string) => {
+    switch (color) {
+      case "primary":
+        return {
+          bg: "bg-primary",
+          border: "border-primary/30",
+          text: "text-primary",
+          via: "via-primary",
+        };
+      case "accent":
+        return {
+          bg: "bg-accent",
+          border: "border-accent/30",
+          text: "text-accent",
+          via: "via-accent",
+        };
+      case "cyber-purple":
+        return {
+          bg: "bg-cyber-purple",
+          border: "border-cyber-purple/30",
+          text: "text-cyber-purple",
+          via: "via-cyber-purple",
+        };
+      default:
+        return {
+          bg: "bg-primary",
+          border: "border-primary/30",
+          text: "text-primary",
+          via: "via-primary",
+        };
+    }
+  };
+
   const projects = [
     {
-      title: "NEURAL DASHBOARD",
+      title: "WEATHER APP",
       category: "WEB APP",
-      description: "AI-powered analytics platform with real-time data visualization and predictive insights.",
-      tech: ["React", "TypeScript", "D3.js", "TensorFlow"],
+      description: "React weather app that displays current weather data for a given location using the OpenWeatherMap API.",
+      tech: ["React", "TypeScript", "OpenWeatherMap API", "Tailwind CSS", "Vite"],
       color: "primary",
+      githubUrl: "https://github.com/Arnold19970330/react-weather-app",
+      liveUrl: null,
     },
     {
-      title: "CRYPTO TRACKER",
-      category: "MOBILE APP",
-      description: "Real-time cryptocurrency portfolio manager with advanced trading algorithms.",
-      tech: ["React Native", "Node.js", "WebSocket", "Redux"],
+      title: "TODO APP",
+      category: "WEB APP",
+      description: "Todo app that allows you to add, edit, and delete tasks.",
+      tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
       color: "accent",
+      githubUrl: "https://github.com/Arnold19970330/react-todo-app",
+      liveUrl: null,
     },
     {
-      title: "DESIGN SYSTEM",
-      category: "UI/UX",
-      description: "Comprehensive component library for modern web applications with dark mode support.",
-      tech: ["Figma", "Storybook", "Tailwind", "React"],
+      title: "MOVIE APP",
+      category: "WEB APP",
+      description: "React movie application for browsing and discovering movies with search functionality and detailed information.",
+      tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
       color: "cyber-purple",
+      githubUrl: "https://github.com/Arnold19970330/react-movie-app",
+      liveUrl: null,
     },
     {
-      title: "METAVERSE HUB",
-      category: "3D WEB",
-      description: "Interactive 3D virtual space for digital exhibitions and collaborative workspaces.",
-      tech: ["Three.js", "WebGL", "Next.js", "GSAP"],
-      color: "primary",
-    },
-    {
-      title: "AI CHATBOT",
-      category: "MACHINE LEARNING",
-      description: "Intelligent conversational interface powered by natural language processing.",
-      tech: ["Python", "OpenAI", "FastAPI", "React"],
-      color: "accent",
-    },
-    {
-      title: "E-COMMERCE PRO",
+      title: "HARRY POTTER QUIZ",
       category: "FULL STACK",
-      description: "Modern e-commerce platform with seamless checkout and inventory management.",
-      tech: ["Next.js", "Stripe", "PostgreSQL", "Prisma"],
-      color: "cyber-purple",
+      description: "Interactive Harry Potter themed quiz application with client-server architecture for testing your wizarding knowledge.",
+      tech: ["React", "TypeScript", "Node.js", "Express"],
+      color: "primary",
+      githubUrl: "https://github.com/Arnold19970330/Harry-potter-quiz",
+      liveUrl: null,
     },
   ];
 
@@ -80,7 +107,7 @@ const Projects = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Top accent line */}
-                <div className={`h-1 bg-${project.color} w-0 group-hover:w-full transition-all duration-500`} />
+                <div className={`h-1 ${getColorClasses(project.color).bg} w-0 group-hover:w-full transition-all duration-500`} />
                 
                 {/* Content */}
                 <div className="p-6 relative">
@@ -89,26 +116,44 @@ const Projects = () => {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-4">
                       <span 
-                        className={`text-xs px-3 py-1 border border-${project.color}/30 text-${project.color} uppercase tracking-wider`}
+                        className={`text-xs px-3 py-1 border ${getColorClasses(project.color).border} ${getColorClasses(project.color).text} uppercase tracking-wider`}
                         style={{ fontFamily: 'Orbitron, sans-serif' }}
                       >
                         {project.category}
                       </span>
                       <div className="flex gap-2">
-                        <Button 
-                          size="icon" 
-                          variant="ghost"
-                          className="w-8 h-8 text-muted-foreground hover:text-primary"
-                        >
-                          <Github className="w-4 h-4" />
-                        </Button>
-                        <Button 
-                          size="icon" 
-                          variant="ghost"
-                          className="w-8 h-8 text-muted-foreground hover:text-primary"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </Button>
+                        {project.githubUrl && (
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Button 
+                              size="icon" 
+                              variant="ghost"
+                              className="w-8 h-8 text-muted-foreground hover:text-primary"
+                            >
+                              <Github className="w-4 h-4" />
+                            </Button>
+                          </a>
+                        )}
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Button 
+                              size="icon" 
+                              variant="ghost"
+                              className="w-8 h-8 text-muted-foreground hover:text-primary"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                            </Button>
+                          </a>
+                        )}
                       </div>
                     </div>
 
@@ -137,7 +182,7 @@ const Projects = () => {
                 </div>
 
                 {/* Bottom glow effect */}
-                <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-${project.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${getColorClasses(project.color).via} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
               </div>
             ))}
           </div>

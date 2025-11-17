@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Heart } from "lucide-react";
+import { Github, Linkedin, X, Heart } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -59,9 +59,9 @@ const Footer = () => {
               </h4>
               <div className="flex gap-4">
                 {[
-                  { icon: Github, href: "https://github.com" },
-                  { icon: Linkedin, href: "https://linkedin.com" },
-                  { icon: Twitter, href: "https://twitter.com" }
+                  { icon: Github, href: "https://github.com/Arnold19970330?tab=repositories" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/in/arnold-galaczi-63793a225/" },
+                  { icon: X, href: "https://x.com/tinkodev" }
                 ].map((social, index) => (
                   <a
                     key={index}

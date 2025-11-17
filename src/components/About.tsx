@@ -41,7 +41,7 @@ const About = () => {
               className="text-4xl md:text-6xl font-bold mb-6 neon-text"
               style={{ fontFamily: 'Orbitron, sans-serif' }}
             >
-              DIGITAL <span className="text-accent">ARCHITECT</span>
+              FRONTEND <span className="text-accent">DEVELOPER</span>
             </h2>
           </div>
 
@@ -51,15 +51,15 @@ const About = () => {
             <div className="space-y-6 animate-fade-in">
               <div className="border-l-2 border-primary pl-6">
                 <p className="text-lg text-foreground leading-relaxed mb-4">
-                  Szenvedélyem a <span className="text-primary font-semibold">technológia</span> és a 
-                  <span className="text-accent font-semibold"> design</span> összefonódása. Olyan digitális 
-                  élményeket alkotok, amelyek nemcsak gyönyörűek, hanem 
-                  <span className="text-cyber-purple font-semibold"> funkcionálisak</span> is.
+                  My passion is <span className="text-primary font-semibold">frontend development</span> and 
+                  using <span className="text-accent font-semibold">modern technologies</span>. I create web applications 
+                  that are not only beautiful, but also 
+                  <span className="text-cyber-purple font-semibold"> efficient</span> and user-friendly.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Specializációm a modern webfejlesztés, ahol a legújabb technológiákat használom fel 
-                  innovatív megoldások létrehozására. Hiszek abban, hogy a jó design és a tiszta kód 
-                  kéz a kézben jár.
+                  I specialize in React and TypeScript-based development, where I use the latest tools and 
+                  libraries to create modern, scalable solutions. I believe that clean code and good UX 
+                  go hand in hand.
                 </p>
               </div>
 

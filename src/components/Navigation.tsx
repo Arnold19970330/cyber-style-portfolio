@@ -50,7 +50,7 @@ const Navigation = () => {
                 e.preventDefault();
                 scrollToSection("#");
               }}
-              className="text-2xl font-bold neon-text cursor-pointer"
+              className="lg:text-2xl text-xl font-bold neon-text cursor-pointer"
               style={{ fontFamily: 'Orbitron, sans-serif' }}
             >
               <span className="text-primary">&lt;</span>
@@ -82,11 +82,11 @@ const Navigation = () => {
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
-              size="icon"
+              size="sm"
               className="md:hidden text-primary"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X /> : <Menu />}
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </Button>
           </div>
         </div>
