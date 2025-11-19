@@ -33,8 +33,6 @@ export default async function handler(request: any, response: any) {
   }
 
   // SMTP config
-  const smtpHost = "mail.rackhost.hu";
-  const smtpPort = 587;
   const smtpUser = process.env.SMTP_USER;
   const smtpPassword = process.env.SMTP_PASSWORD;
 
@@ -43,14 +41,15 @@ export default async function handler(request: any, response: any) {
   }
 
   const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: false,
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
+    secure: true,           // 465-öz szükséges!!
     auth: {
-      user: smtpUser,
-      pass: smtpPassword,
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
     },
   });
+  
 
   const mailOptions = {
     from: smtpUser,         // Rackhost megköveteli
