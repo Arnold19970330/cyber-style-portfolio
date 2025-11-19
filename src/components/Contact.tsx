@@ -70,7 +70,7 @@ const Contact = () => {
     { icon: Github, label: "GitHub", href: "https://github.com/Arnold19970330?tab=repositories", color: "primary" },
     { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/arnold-galaczi-63793a225/", color: "accent" },
     { icon: Twitter, label: "Twitter", href: "https://x.com/tinkodev", color: "cyber-purple" },
-    { icon: Mail, label: "Email", href: "mailto:tinkodev@gmail.com.com", color: "primary" }
+    { icon: Mail, label: "Email", href: "mailto:tinkodev@gmail.com", color: "primary" }
   ];
 
   return (
