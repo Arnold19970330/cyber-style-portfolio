@@ -68,20 +68,21 @@ cyber-style-portfolio/
 │   ├── hooks/          # Custom React hooks
 │   ├── lib/            # Utility functions
 │   └── assets/         # Static assets
-├── api/                # Vercel serverless functions
+├── server.js           # Express backend server
 ├── public/             # Public assets
 └── ...
 ```
 
-## Email Configuration (Vercel)
+## Backend Server Setup
 
-To enable the contact form email functionality, you need to set up the following environment variables in your Vercel project settings:
+The project includes an Express.js backend server for handling email submissions.
 
-1. Go to your Vercel project dashboard
-2. Navigate to **Settings** → **Environment Variables**
-3. Add the following variables:
+### Development
 
-```
+1. **Create a `.env` file** in the root directory:
+
+```env
+PORT=3001
 SMTP_HOST=smtp.rackhost.hu
 SMTP_PORT=465
 SMTP_USER=your-email@galacziarnold.com
@@ -89,19 +90,39 @@ SMTP_PASSWORD=your-email-password
 RECIPIENT_EMAIL=your-email@galacziarnold.com
 ```
 
+2. **Start the backend server:**
+```sh
+npm run dev:server
+```
+
+3. **Start the frontend (in a separate terminal):**
+```sh
+npm run dev
+```
+
+Or start both at once:
+```sh
+npm run dev:all
+```
+
+### Production
+
+For production deployment, make sure to set the environment variables on your hosting platform.
+
 **Note:** 
 - `SMTP_USER` should be your full email address (e.g., `tinkodev@galacziarnold.com`)
 - `SMTP_PASSWORD` is your email account password
 - `RECIPIENT_EMAIL` is where you want to receive the contact form submissions (can be the same as `SMTP_USER`)
 
-After adding the environment variables, redeploy your application for the changes to take effect.
-
 ## Available Scripts
 
-- `npm run dev` - Start development server
+- `npm run dev` - Start frontend development server (Vite)
+- `npm run dev:server` - Start backend server (Express)
+- `npm run dev:all` - Start both frontend and backend simultaneously
 - `npm run build` - Build for production
 - `npm run build:dev` - Build in development mode
 - `npm run preview` - Preview production build
+- `npm run start` - Start backend server in production mode
 - `npm run lint` - Run ESLint
 
 ## License

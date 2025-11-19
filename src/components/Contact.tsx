@@ -18,11 +18,8 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // In development, the API endpoint might not be available
-      // This will work in production on Vercel
-      const apiUrl = import.meta.env.PROD 
-        ? '/api/send-email' 
-        : '/api/send-email';
+      // Backend server URL
+      const apiUrl = "https://portfolio-email-backend.onrender.com/contact";
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -40,7 +37,7 @@ const Contact = () => {
         
         // In development, show a helpful message
         if (import.meta.env.DEV) {
-          throw new Error('Email API is only available in production. Please deploy to Vercel or contact me directly at tinkodev@gmail.com');
+          throw new Error('Backend server is not running. Please start it with: npm run dev:server');
         }
         
         throw new Error('Server returned an invalid response. Please try again later.');
