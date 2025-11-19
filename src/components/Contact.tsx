@@ -19,7 +19,7 @@ const Contact = () => {
 
     try {
       // Backend server URL
-      const apiUrl = "https://portfolio-email-backend.onrender.com/contact";
+      const apiUrl = "https://cyber-style-portfolio.onrender.com/contact";
 
       const response = await fetch(apiUrl, {
         method: 'POST',
