@@ -1,32 +1,49 @@
 // @ts-ignore - nodemailer types may not be available in this context
 import nodemailer from 'nodemailer';
 
+// Vercel serverless function types
 interface VercelRequest {
   method?: string;
-  body?: {
-    name?: string;
-    email?: string;
-    message?: string;
-  };
+  body?: string | Record<string, any>;
+  headers?: Record<string, string>;
 }
 
 interface VercelResponse {
   status: (code: number) => VercelResponse;
   json: (data: any) => void;
+  setHeader: (name: string, value: string) => void;
+  end: () => void;
 }
 
 export default async function handler(
   request: VercelRequest,
   response: VercelResponse,
 ) {
+  // Set CORS headers
+  response.setHeader('Access-Control-Allow-Origin', '*');
+  response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight
+  if (request.method === 'OPTIONS') {
+    return response.status(200).end();
+  }
+
   // Only allow POST requests
   if (request.method !== 'POST') {
     return response.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const body = request.body || {};
-    const { name, email, message } = body;
+    // Parse request body
+    let body;
+    try {
+      body = typeof request.body === 'string' ? JSON.parse(request.body) : request.body;
+    } catch (e) {
+      return response.status(400).json({ error: 'Invalid JSON in request body' });
+    }
+
+    const { name, email, message } = body || {};
 
     // Validate input
     if (!name || !email || !message) {
@@ -104,10 +121,17 @@ ${message}
       messageId: info.messageId 
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error sending email:', error);
+    
+    // Return detailed error in development, generic in production
+    const errorMessage = process.env.NODE_ENV === 'development' 
+      ? `Failed to send email: ${error?.message || 'Unknown error'}`
+      : 'Failed to send email. Please try again later.';
+    
     return response.status(500).json({ 
-      error: 'Failed to send email. Please try again later.' 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error?.stack : undefined
     });
   }
 }
