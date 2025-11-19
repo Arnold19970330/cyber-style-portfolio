@@ -11,13 +11,39 @@ const Contact = () => {
     email: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent successfully!", {
-      description: "I'll get back to you as soon as possible."
-    });
-    setFormData({ name: "", email: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      toast.success("Message sent successfully!", {
+        description: "I'll get back to you as soon as possible."
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error("Failed to send message", {
+        description: error instanceof Error ? error.message : "Please try again later or contact me directly via email."
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const socialLinks = [
@@ -114,10 +140,11 @@ const Contact = () => {
 
                 <Button 
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-6 text-lg cyber-border animate-pulse-glow"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-6 text-lg cyber-border animate-pulse-glow disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: 'Orbitron, sans-serif' }}
                 >
-                  SEND MESSAGE
+                  {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
                 </Button>
               </form>
             </div>

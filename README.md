@@ -68,9 +68,33 @@ cyber-style-portfolio/
 │   ├── hooks/          # Custom React hooks
 │   ├── lib/            # Utility functions
 │   └── assets/         # Static assets
+├── api/                # Vercel serverless functions
 ├── public/             # Public assets
 └── ...
 ```
+
+## Email Configuration (Vercel)
+
+To enable the contact form email functionality, you need to set up the following environment variables in your Vercel project settings:
+
+1. Go to your Vercel project dashboard
+2. Navigate to **Settings** → **Environment Variables**
+3. Add the following variables:
+
+```
+SMTP_HOST=smtp.rackhost.hu
+SMTP_PORT=465
+SMTP_USER=your-email@galacziarnold.com
+SMTP_PASSWORD=your-email-password
+RECIPIENT_EMAIL=your-email@galacziarnold.com
+```
+
+**Note:** 
+- `SMTP_USER` should be your full email address (e.g., `tinkodev@galacziarnold.com`)
+- `SMTP_PASSWORD` is your email account password
+- `RECIPIENT_EMAIL` is where you want to receive the contact form submissions (can be the same as `SMTP_USER`)
+
+After adding the environment variables, redeploy your application for the changes to take effect.
 
 ## Available Scripts
 
