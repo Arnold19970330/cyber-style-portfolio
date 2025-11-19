@@ -18,13 +18,33 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/send-email', {
+      // In development, the API endpoint might not be available
+      // This will work in production on Vercel
+      const apiUrl = import.meta.env.PROD 
+        ? '/api/send-email' 
+        : '/api/send-email';
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
+
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        
+        // In development, show a helpful message
+        if (import.meta.env.DEV) {
+          throw new Error('Email API is only available in production. Please deploy to Vercel or contact me directly at tinkodev@gmail.com');
+        }
+        
+        throw new Error('Server returned an invalid response. Please try again later.');
+      }
 
       const data = await response.json();
 
