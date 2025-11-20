@@ -1,31 +1,23 @@
 import express from "express";
-import nodemailer from "nodemailer";
+import { Resend } from "resend"; // Új import
 import cors from "cors";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Inicializáljuk a Resend-et a környezeti változóból
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 app.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
-    },
-  });
-
   try {
-    await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
-      replyTo: email,
+    const data = await resend.emails.send({
+      from: "Portfolio Contact <contact@TE_DOMAINED.com>", // FONTOS: Itt a saját domainedet használd!
+      to: ["tinkodev@gmail.com"], // Ide érkezzen a levél (a saját gmailed)
+      reply_to: email, // Hogy válaszolni tudj a feladónak
       subject: `New message from ${name}`,
-      text: message,
       html: `
         <h2>New Contact Message</h2>
         <p><strong>Name:</strong> ${name}</p>
@@ -34,10 +26,11 @@ app.post("/contact", async (req, res) => {
       `,
     });
 
-    res.status(200).json({ success: true });
-  } catch (err) {
-    console.error("Email send error:", err);
-    res.status(500).json({ error: "Email failed" });
+    console.log("Email sent successfully:", data);
+    res.status(200).json({ success: true, data });
+  } catch (error) {
+    console.error("Email send error:", error);
+    res.status(500).json({ error: "Failed to send email" });
   }
 });
 
