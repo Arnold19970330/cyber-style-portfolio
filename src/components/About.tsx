@@ -33,13 +33,12 @@ const About = () => {
           {/* Section Header */}
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-block mb-4">
-              <span className="text-primary text-sm uppercase tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+              <span className="text-primary text-sm uppercase tracking-widest font-orbitron">
                 // About Me
               </span>
             </div>
             <h2 
-              className="text-4xl md:text-6xl font-bold mb-6 neon-text"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
+              className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
               FRONTEND <span className="text-accent">DEVELOPER</span>
             </h2>
@@ -64,16 +63,16 @@ const About = () => {
               </div>
 
               <div className="flex flex-wrap gap-3 pt-4">
-                <span className="px-4 py-2 bg-secondary border border-primary/30 text-primary text-sm font-medium" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                <span className="px-4 py-2 bg-secondary border border-primary/30 text-primary text-sm font-medium font-orbitron">
                   REACT
                 </span>
-                <span className="px-4 py-2 bg-secondary border border-accent/30 text-accent text-sm font-medium" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                <span className="px-4 py-2 bg-secondary border border-accent/30 text-accent text-sm font-medium font-orbitron">
                   TYPESCRIPT
                 </span>
-                <span className="px-4 py-2 bg-secondary border border-cyber-purple/30 text-cyber-purple text-sm font-medium" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                <span className="px-4 py-2 bg-secondary border border-cyber-purple/30 text-cyber-purple text-sm font-medium font-orbitron">
                   TAILWIND
                 </span>
-                <span className="px-4 py-2 bg-secondary border border-primary/30 text-primary text-sm font-medium" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                <span className="px-4 py-2 bg-secondary border border-primary/30 text-primary text-sm font-medium font-orbitron">
                   FIGMA
                 </span>
               </div>
@@ -88,7 +87,7 @@ const About = () => {
                     <div className="w-32 h-32 mx-auto border-4 border-primary rounded-full flex items-center justify-center cyber-border animate-pulse-glow">
                       <Code2 className="w-16 h-16 text-primary" />
                     </div>
-                    <p className="text-2xl font-bold text-primary" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                    <p className="text-2xl font-bold text-primary font-orbitron">
                       5+ YEARS
                     </p>
                     <p className="text-muted-foreground uppercase text-sm tracking-wider">
@@ -110,8 +109,7 @@ const About = () => {
               >
                 <item.icon className="w-10 h-10 text-primary mb-4 group-hover:animate-pulse-glow" />
                 <h3 
-                  className="text-lg font-bold mb-2 text-foreground"
-                  style={{ fontFamily: 'Orbitron, sans-serif' }}
+                  className="text-lg font-bold mb-2 text-foreground font-orbitron"
                 >
                   {item.title}
                 </h3>

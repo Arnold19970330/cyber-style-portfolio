@@ -1,12 +1,13 @@
+import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
-  const scrollToSection = (id: string) => {
+  const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   return (
     <section 
@@ -17,6 +18,7 @@ const Hero = () => {
         backgroundPosition: 'center',
         backgroundBlendMode: 'overlay'
       }}
+      aria-label="Hero section"
     >
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-background/80" />
@@ -32,8 +34,7 @@ const Hero = () => {
           {/* Glitch effect name */}
           <div className="relative inline-block">
             <h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold tracking-wider neon-text whitespace-nowrap"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold tracking-wider neon-text whitespace-nowrap font-orbitron"
             >
               <span className="text-primary">GALACZI</span>
               <span className="text-accent">_</span>
@@ -44,7 +45,7 @@ const Hero = () => {
           {/* Subtitle with typing effect */}
           <div className="flex items-center justify-center gap-2 text-xl md:text-2xl">
             <span className="text-muted-foreground">&gt;</span>
-            <p className="text-primary font-medium" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+            <p className="text-primary font-medium font-orbitron">
               FULL STACK DEVELOPER
             </p>
           </div>
@@ -59,30 +60,35 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <Button 
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-6 text-lg cyber-border animate-pulse-glow"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-6 text-lg cyber-border animate-pulse-glow font-orbitron"
               onClick={() => scrollToSection('projects')}
+              aria-label="Scroll to projects section"
             >
               VIEW PROJECTS
             </Button>
             <Button 
               size="lg"
               variant="outline"
-              className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-6 text-lg"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
+              className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-6 text-lg font-orbitron"
               onClick={() => scrollToSection('contact')}
+              aria-label="Scroll to contact section"
             >
               GET IN TOUCH
             </Button>
           </div>
 
           {/* Scroll indicator */}
-          <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-[42%] lg:left-[48.5%] -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 animate-bounce cursor-pointer" onClick={() => scrollToSection('about')}>
-            <span className="text-muted-foreground text-xs sm:text-sm uppercase tracking-wider" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+          <button
+            type="button"
+            className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-[42%] lg:left-[48.5%] -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 animate-bounce cursor-pointer bg-transparent border-none p-0"
+            onClick={() => scrollToSection('about')}
+            aria-label="Scroll to about section"
+          >
+            <span className="text-muted-foreground text-xs sm:text-sm uppercase tracking-wider font-orbitron">
               Scroll
             </span>
-            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />
-          </div>
+            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </section>

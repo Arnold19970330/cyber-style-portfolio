@@ -49,13 +49,12 @@ const Skills = () => {
           {/* Section Header */}
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-block mb-4">
-              <span className="text-primary text-sm uppercase tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+              <span className="text-primary text-sm uppercase tracking-widest font-orbitron">
                 // Tech Stack
               </span>
             </div>
             <h2 
-              className="text-4xl md:text-6xl font-bold mb-6 neon-text"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
+              className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
               SKILLS & <span className="text-accent">EXPERTISE</span>
             </h2>
@@ -78,8 +77,7 @@ const Skills = () => {
                     <category.icon className={`w-6 h-6 text-${category.color}`} />
                   </div>
                   <h3 
-                    className="text-xl font-bold text-foreground flex-1 group-hover:text-primary transition-colors"
-                    style={{ fontFamily: 'Orbitron, sans-serif' }}
+                    className="text-xl font-bold text-foreground flex-1 group-hover:text-primary transition-colors font-orbitron"
                   >
                     {category.title}
                   </h3>
@@ -118,8 +116,7 @@ const Skills = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div 
-                  className="text-3xl md:text-4xl font-bold text-primary mb-2"
-                  style={{ fontFamily: 'Orbitron, sans-serif' }}
+                  className="text-3xl md:text-4xl font-bold text-primary mb-2 font-orbitron"
                 >
                   {stat.value}
                 </div>

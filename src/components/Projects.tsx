@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const Projects = () => {
+const Projects = memo(() => {
   const getColorClasses = (color: string) => {
     switch (color) {
       case "primary":
@@ -101,13 +102,12 @@ const Projects = () => {
           {/* Section Header */}
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-block mb-4">
-              <span className="text-primary text-sm uppercase tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+              <span className="text-primary text-sm uppercase tracking-widest font-orbitron">
                 // My Work
               </span>
             </div>
             <h2 
-              className="text-4xl md:text-6xl font-bold mb-6 neon-text"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
+              className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
               FEATURED <span className="text-accent">PROJECTS</span>
             </h2>
@@ -134,8 +134,7 @@ const Projects = () => {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-4">
                       <span 
-                        className={`text-xs px-3 py-1 border ${getColorClasses(project.color).border} ${getColorClasses(project.color).text} uppercase tracking-wider`}
-                        style={{ fontFamily: 'Orbitron, sans-serif' }}
+                        className={`text-xs px-3 py-1 border ${getColorClasses(project.color).border} ${getColorClasses(project.color).text} uppercase tracking-wider font-orbitron`}
                       >
                         {project.category}
                       </span>
@@ -176,8 +175,7 @@ const Projects = () => {
                     </div>
 
                     <h3 
-                      className="text-2xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors"
-                      style={{ fontFamily: 'Orbitron, sans-serif' }}
+                      className="text-2xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors font-orbitron"
                     >
                       {project.title}
                     </h3>
@@ -208,6 +206,8 @@ const Projects = () => {
       </div>
     </section>
   );
-};
+});
+
+Projects.displayName = "Projects";
 
 export default Projects;

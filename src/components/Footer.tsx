@@ -13,8 +13,7 @@ const Footer = () => {
             {/* Brand */}
             <div>
               <h3 
-                className="text-2xl font-bold mb-4 neon-text"
-                style={{ fontFamily: 'Orbitron, sans-serif' }}
+                className="text-2xl font-bold mb-4 neon-text font-orbitron"
               >
                 <span className="text-primary">&lt;</span>
                 CYBER
@@ -30,8 +29,7 @@ const Footer = () => {
             {/* Quick Links */}
             <div>
               <h4 
-                className="text-lg font-bold mb-4 text-foreground"
-                style={{ fontFamily: 'Orbitron, sans-serif' }}
+                className="text-lg font-bold mb-4 text-foreground font-orbitron"
               >
                 QUICK LINKS
               </h4>
@@ -52,8 +50,7 @@ const Footer = () => {
             {/* Social */}
             <div>
               <h4 
-                className="text-lg font-bold mb-4 text-foreground"
-                style={{ fontFamily: 'Orbitron, sans-serif' }}
+                className="text-lg font-bold mb-4 text-foreground font-orbitron"
               >
                 CONNECT
               </h4>
