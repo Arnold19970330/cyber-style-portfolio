@@ -76,9 +76,12 @@ const Footer = () => {
 
           {/* Bottom Bar */}
           <div className="pt-8 border-t border-primary/20">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-muted-foreground flex items-center gap-2">
-                © {currentYear} GALAXY_INFORMATICS. Made with <Heart className="w-4 h-4 text-primary" /> using React & TypeScript
+            <div className="flex flex-col items-center justify-center gap-2 text-center">
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                © {currentYear} GALAXY_INFORMATICS.
+              </p>
+              <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-2">
+                Made with <Heart className="w-4 h-4 text-primary" aria-hidden="true" /> using React & TypeScript
               </p>
             </div>
           </div>
