@@ -72,6 +72,24 @@ const Projects = () => {
       githubUrl: "https://github.com/Arnold19970330/Harry-potter-quiz",
       liveUrl: null,
     },
+    {
+      title: "MESKA",
+      category: "FULL STACK",
+      description: "Full stack web application built with PHP and SQL backend, featuring custom UI components, React frontend, and comprehensive backend development.",
+      tech: ["PHP", "SQL", "React", "Tailwind CSS", "HTML", "CSS"],
+      color: "accent",
+      githubUrl: null,
+      liveUrl: "https://www.meska.hu/",
+    },
+    {
+      title: "TRANSYLVANIAN WONDERS",
+      category: "FULL STACK",
+      description: "Tour booking web application for Transylvania with activity reservations, city guides, and booking management system.",
+      tech: ["Laravel", "Alpine.js", "PHP", "SQLite", "HTML"],
+      color: "cyber-purple",
+      githubUrl: null,
+      liveUrl: "https://transylvanianwonders.com/",
+    },
   ];
 
   return (
