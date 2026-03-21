@@ -1,8 +1,78 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/i18n/context";
+
+const PROJECT_DEFS = [
+  {
+    id: "weather" as const,
+    color: "primary",
+    githubUrl: "https://github.com/Arnold19970330/react-weather-app",
+    liveUrl: null as string | null,
+    tech: ["React", "TypeScript", "OpenWeatherMap API", "Tailwind CSS", "Vite"],
+  },
+  {
+    id: "todo" as const,
+    color: "accent",
+    githubUrl: "https://github.com/Arnold19970330/react-todo-app",
+    liveUrl: null,
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+  },
+  {
+    id: "movie" as const,
+    color: "cyber-purple",
+    githubUrl: "https://github.com/Arnold19970330/react-movie-app",
+    liveUrl: null,
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+  },
+  {
+    id: "harryPotter" as const,
+    color: "primary",
+    githubUrl: "https://github.com/Arnold19970330/Harry-potter-quiz",
+    liveUrl: null,
+    tech: ["React", "TypeScript", "Node.js", "Express"],
+  },
+  {
+    id: "meska" as const,
+    color: "accent",
+    githubUrl: null,
+    liveUrl: "https://www.meska.hu/",
+    tech: ["PHP", "SQL", "React", "Tailwind CSS", "HTML", "CSS"],
+  },
+  {
+    id: "transylvania" as const,
+    color: "cyber-purple",
+    githubUrl: null,
+    liveUrl: "https://transylvanianwonders.com/",
+    tech: ["Laravel", "Alpine.js", "PHP", "SQLite", "HTML"],
+  },
+  {
+    id: "aiResearch" as const,
+    color: "primary",
+    githubUrl: null,
+    liveUrl: "https://airesearch.esas.hu/",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+  },
+];
 
 const Projects = memo(() => {
+  const { t } = useI18n();
+
+  const projects = useMemo(
+    () =>
+      PROJECT_DEFS.map((def) => ({
+        id: def.id,
+        title: t(`projects.items.${def.id}.title`),
+        category: t(`projects.items.${def.id}.category`),
+        description: t(`projects.items.${def.id}.description`),
+        tech: def.tech,
+        color: def.color,
+        githubUrl: def.githubUrl,
+        liveUrl: def.liveUrl,
+      })),
+    [t],
+  );
+
   const getColorClasses = (color: string) => {
     switch (color) {
       case "primary":
@@ -36,73 +106,6 @@ const Projects = memo(() => {
     }
   };
 
-  const projects = [
-    {
-      title: "WEATHER APP",
-      category: "WEB APP",
-      description: "React weather app that displays current weather data for a given location using the OpenWeatherMap API.",
-      tech: ["React", "TypeScript", "OpenWeatherMap API", "Tailwind CSS", "Vite"],
-      color: "primary",
-      githubUrl: "https://github.com/Arnold19970330/react-weather-app",
-      liveUrl: null,
-    },
-    {
-      title: "TODO APP",
-      category: "WEB APP",
-      description: "Todo app that allows you to add, edit, and delete tasks.",
-      tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-      color: "accent",
-      githubUrl: "https://github.com/Arnold19970330/react-todo-app",
-      liveUrl: null,
-    },
-    {
-      title: "MOVIE APP",
-      category: "WEB APP",
-      description: "React movie application for browsing and discovering movies with search functionality and detailed information.",
-      tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-      color: "cyber-purple",
-      githubUrl: "https://github.com/Arnold19970330/react-movie-app",
-      liveUrl: null,
-    },
-    {
-      title: "HARRY POTTER QUIZ",
-      category: "FULL STACK",
-      description: "Interactive Harry Potter themed quiz application with client-server architecture for testing your wizarding knowledge.",
-      tech: ["React", "TypeScript", "Node.js", "Express"],
-      color: "primary",
-      githubUrl: "https://github.com/Arnold19970330/Harry-potter-quiz",
-      liveUrl: null,
-    },
-    {
-      title: "MESKA",
-      category: "FULL STACK",
-      description: "Full stack web application built with PHP and SQL backend, featuring custom UI components, React frontend, and comprehensive backend development.",
-      tech: ["PHP", "SQL", "React", "Tailwind CSS", "HTML", "CSS"],
-      color: "accent",
-      githubUrl: null,
-      liveUrl: "https://www.meska.hu/",
-    },
-    {
-      title: "TRANSYLVANIAN WONDERS",
-      category: "FULL STACK",
-      description: "Tour booking web application for Transylvania with activity reservations, city guides, and booking management system.",
-      tech: ["Laravel", "Alpine.js", "PHP", "SQLite", "HTML"],
-      color: "cyber-purple",
-      githubUrl: null,
-      liveUrl: "https://transylvanianwonders.com/",
-    },
-    {
-      title: "AI & PSYCHOLOGY RESEARCH",
-      category: "RESEARCH",
-      description:
-        "ESAS research portal for a psychology study on AI-assisted support: consent flow, multi-part questionnaire, secure handling, and participant-facing information.",
-      tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-      color: "primary",
-      githubUrl: null,
-      liveUrl: "https://airesearch.esas.hu/",
-    },
-  ];
-
   return (
     <section id="projects" className="py-24 relative overflow-hidden bg-background/50">
       <div className="absolute inset-0 cyber-grid opacity-20" />
@@ -113,16 +116,17 @@ const Projects = memo(() => {
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-block mb-4">
               <span className="text-primary text-sm uppercase tracking-widest font-orbitron">
-                // My Work
+                {t("projects.kicker")}
               </span>
             </div>
             <h2 
               className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
-              FEATURED <span className="text-accent">PROJECTS</span>
+              {t("projects.title")}
+              <span className="text-accent">{t("projects.titleAccent")}</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore a selection of my recent work, spanning web development, UI/UX design, and cutting-edge technologies.
+              {t("projects.subtitle")}
             </p>
           </div>
 
@@ -130,7 +134,7 @@ const Projects = memo(() => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div 
-                key={index}
+                key={project.id}
                 className="group relative bg-card border border-primary/20 overflow-hidden hover:border-primary transition-all duration-300 animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >

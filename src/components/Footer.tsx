@@ -1,7 +1,16 @@
 import { Github, Linkedin, X, Heart } from "lucide-react";
+import { useI18n } from "@/i18n/context";
 
 const Footer = () => {
+  const { t } = useI18n();
   const currentYear = new Date().getFullYear();
+
+  const quickLinks = [
+    { href: "#about", labelKey: "footer.about" as const },
+    { href: "#projects", labelKey: "footer.projects" as const },
+    { href: "#skills", labelKey: "footer.skills" as const },
+    { href: "#contact", labelKey: "footer.contact" as const },
+  ];
 
   return (
     <footer className="relative py-12 border-t border-primary/20 overflow-hidden">
@@ -16,13 +25,13 @@ const Footer = () => {
                 className="text-2xl font-bold mb-4 neon-text font-orbitron"
               >
                 <span className="text-primary">&lt;</span>
-                CYBER
+                  GALAXY
                 <span className="text-accent">_</span>
-                DEV
+                INFORMATICS
                 <span className="text-primary">/&gt;</span>
               </h3>
               <p className="text-sm text-muted-foreground">
-                Crafting digital experiences at the intersection of design and technology.
+                {t("footer.tagline")}
               </p>
             </div>
 
@@ -31,16 +40,16 @@ const Footer = () => {
               <h4 
                 className="text-lg font-bold mb-4 text-foreground font-orbitron"
               >
-                QUICK LINKS
+                {t("footer.quick")}
               </h4>
               <ul className="space-y-2">
-                {['About', 'Projects', 'Skills', 'Contact'].map((item, index) => (
+                {quickLinks.map((item, index) => (
                   <li key={index}>
                     <a 
-                      href={`#${item.toLowerCase()}`}
+                      href={item.href}
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      {item}
+                      {t(item.labelKey)}
                     </a>
                   </li>
                 ))}
@@ -52,7 +61,7 @@ const Footer = () => {
               <h4 
                 className="text-lg font-bold mb-4 text-foreground font-orbitron"
               >
-                CONNECT
+                {t("footer.connect")}
               </h4>
               <div className="flex gap-4">
                 {[
@@ -78,10 +87,10 @@ const Footer = () => {
           <div className="pt-8 border-t border-primary/20">
             <div className="flex flex-col items-center justify-center gap-2 text-center">
               <p className="text-xs sm:text-sm text-muted-foreground">
-                © {currentYear} GALAXY_INFORMATICS.
+                {t("footer.rights", { year: String(currentYear) })}
               </p>
-              <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-2">
-                Made with <Heart className="w-4 h-4 text-primary" aria-hidden="true" /> using React & TypeScript
+              <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-2 flex-wrap justify-center">
+                {t("footer.made")} <Heart className="w-4 h-4 text-primary shrink-0" aria-hidden="true" /> {t("footer.stack")}
               </p>
             </div>
           </div>

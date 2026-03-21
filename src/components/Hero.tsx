@@ -2,8 +2,10 @@ import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useI18n } from "@/i18n/context";
 
 const Hero = () => {
+  const { t } = useI18n();
   const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
@@ -46,14 +48,18 @@ const Hero = () => {
           <div className="flex items-center justify-center gap-2 text-xl md:text-2xl">
             <span className="text-muted-foreground">&gt;</span>
             <p className="text-primary font-medium font-orbitron">
-              FULL STACK DEVELOPER
+              {t("hero.role")}
             </p>
           </div>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Crafting <span className="text-primary">digital experiences</span> at the intersection of 
-            <span className="text-accent"> design</span> and <span className="text-cyber-purple">technology.</span>
+            {t("hero.desc.pre")}
+            <span className="text-primary">{t("hero.desc.highlight")}</span>
+            {t("hero.desc.mid")}
+            <span className="text-accent">{t("hero.desc.design")}</span>
+            {t("hero.desc.and")}
+            <span className="text-cyber-purple">{t("hero.desc.technology")}</span>
           </p>
 
           {/* CTA Buttons */}
@@ -62,18 +68,18 @@ const Hero = () => {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-6 text-lg cyber-border animate-pulse-glow font-orbitron"
               onClick={() => scrollToSection('projects')}
-              aria-label="Scroll to projects section"
+              aria-label={t("hero.ariaProjects")}
             >
-              VIEW PROJECTS
+              {t("hero.ctaProjects")}
             </Button>
             <Button 
               size="lg"
               variant="outline"
               className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-6 text-lg font-orbitron"
               onClick={() => scrollToSection('contact')}
-              aria-label="Scroll to contact section"
+              aria-label={t("hero.ariaContact")}
             >
-              GET IN TOUCH
+              {t("hero.ctaContact")}
             </Button>
           </div>
 
@@ -82,10 +88,10 @@ const Hero = () => {
             type="button"
             className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-[42%] lg:left-[48.5%] -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 animate-bounce cursor-pointer bg-transparent border-none p-0"
             onClick={() => scrollToSection('about')}
-            aria-label="Scroll to about section"
+            aria-label={t("hero.ariaAbout")}
           >
             <span className="text-muted-foreground text-xs sm:text-sm uppercase tracking-wider font-orbitron">
-              Scroll
+              {t("hero.scroll")}
             </span>
             <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" aria-hidden="true" />
           </button>

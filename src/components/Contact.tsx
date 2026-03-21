@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -8,25 +9,39 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Github, Linkedin, Mail, Twitter, Globe, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { getApiUrl } from "@/lib/config";
+import { useI18n } from "@/i18n/context";
 
-// Form validation schema
-const contactFormSchema = z.object({
-  name: z.string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be less than 50 characters")
-    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
-  email: z.string()
-    .email("Please enter a valid email address")
-    .min(5, "Email must be at least 5 characters")
-    .max(100, "Email must be less than 100 characters"),
-  message: z.string()
-    .min(10, "Message must be at least 10 characters")
-    .max(1000, "Message must be less than 1000 characters"),
-});
+type ContactFormValues = {
+  name: string;
+  email: string;
+  message: string;
+};
 
-type ContactFormValues = z.infer<typeof contactFormSchema>;
+/** Remount on locale change so zod resolver messages match the active language. */
+function ContactFormFields() {
+  const { t } = useI18n();
 
-const Contact = () => {
+  const contactFormSchema = useMemo(
+    () =>
+      z.object({
+        name: z
+          .string()
+          .min(2, t("contact.validation.nameMin"))
+          .max(50, t("contact.validation.nameMax"))
+          .regex(/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s'-]+$/i, t("contact.validation.namePattern")),
+        email: z
+          .string()
+          .email(t("contact.validation.email"))
+          .min(5, t("contact.validation.emailMin"))
+          .max(100, t("contact.validation.emailMax")),
+        message: z
+          .string()
+          .min(10, t("contact.validation.messageMin"))
+          .max(1000, t("contact.validation.messageMax")),
+      }),
+    [t],
+  );
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -55,29 +70,127 @@ const Contact = () => {
         console.error('Non-JSON response:', text);
         
         if (import.meta.env.DEV) {
-          throw new Error('Backend server is not running. Please start it with: npm run dev:server');
+          throw new Error(t("contact.errDev"));
         }
         
-        throw new Error('Server returned an invalid response. Please try again later.');
+        throw new Error(t("contact.errInvalid"));
       }
 
       const responseData = await response.json();
 
       if (!response.ok) {
-        throw new Error(responseData.error || 'Failed to send message');
+        throw new Error(responseData.error || t("contact.errSend"));
       }
 
-      toast.success("Message sent successfully!", {
-        description: "I'll get back to you as soon as possible."
+      toast.success(t("contact.toastOk"), {
+        description: t("contact.toastOkDesc"),
       });
       form.reset();
     } catch (error) {
       console.error('Error sending message:', error);
-      toast.error("Failed to send message", {
-        description: error instanceof Error ? error.message : "Please try again later or contact me directly via email."
+      toast.error(t("contact.toastErr"), {
+        description:
+          error instanceof Error ? error.message : t("contact.toastErrDesc"),
       });
     }
   };
+
+  return (
+    <div className="animate-fade-in">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" noValidate>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-orbitron">
+                  {t("contact.name")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="text"
+                    className="bg-card border-primary/20 focus:border-primary text-foreground"
+                    placeholder={t("contact.namePh")}
+                    aria-describedby="name-error"
+                    aria-invalid={!!form.formState.errors.name}
+                  />
+                </FormControl>
+                <FormMessage id="name-error" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-orbitron">
+                  {t("contact.email")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    className="bg-card border-primary/20 focus:border-primary text-foreground"
+                    placeholder={t("contact.emailPh")}
+                    aria-describedby="email-error"
+                    aria-invalid={!!form.formState.errors.email}
+                  />
+                </FormControl>
+                <FormMessage id="email-error" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-orbitron">
+                  {t("contact.message")}
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    rows={6}
+                    className="bg-card border-primary/20 focus:border-primary text-foreground resize-none"
+                    placeholder={t("contact.messagePh")}
+                    aria-describedby="message-error"
+                    aria-invalid={!!form.formState.errors.message}
+                  />
+                </FormControl>
+                <FormMessage id="message-error" />
+              </FormItem>
+            )}
+          />
+
+          <Button 
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-6 text-lg cyber-border animate-pulse-glow disabled:opacity-50 disabled:cursor-not-allowed font-orbitron"
+            aria-label={form.formState.isSubmitting ? t("contact.ariaSending") : t("contact.ariaSend")}
+          >
+            {form.formState.isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                {t("contact.sending")}
+              </>
+            ) : (
+              t("contact.send")
+            )}
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
+}
+
+const Contact = () => {
+  const { t, locale } = useI18n();
 
   const socialLinks = [
     { icon: Github, label: "GitHub", href: "https://github.com/Arnold19970330?tab=repositories", color: "primary" },
@@ -96,112 +209,24 @@ const Contact = () => {
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-block mb-4">
               <span className="text-primary text-sm uppercase tracking-widest font-orbitron">
-                // Get In Touch
+                {t("contact.kicker")}
               </span>
             </div>
             <h2 
               id="contact-heading"
               className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
-              LET'S <span className="text-accent">CONNECT</span>
+              {t("contact.title")}
+              <span className="text-accent">{t("contact.titleAccent")}</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Have a project in mind or just want to chat? Drop me a message and I'll get back to you shortly.
+              {t("contact.subtitle")}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="animate-fade-in">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" noValidate>
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-orbitron">
-                          Name
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type="text"
-                            className="bg-card border-primary/20 focus:border-primary text-foreground"
-                            placeholder="Your name"
-                            aria-describedby="name-error"
-                            aria-invalid={!!form.formState.errors.name}
-                          />
-                        </FormControl>
-                        <FormMessage id="name-error" />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-orbitron">
-                          Email
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type="email"
-                            className="bg-card border-primary/20 focus:border-primary text-foreground"
-                            placeholder="your.email@example.com"
-                            aria-describedby="email-error"
-                            aria-invalid={!!form.formState.errors.email}
-                          />
-                        </FormControl>
-                        <FormMessage id="email-error" />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-orbitron">
-                          Message
-                        </FormLabel>
-                        <FormControl>
-                          <Textarea
-                            {...field}
-                            rows={6}
-                            className="bg-card border-primary/20 focus:border-primary text-foreground resize-none"
-                            placeholder="Tell me about your project..."
-                            aria-describedby="message-error"
-                            aria-invalid={!!form.formState.errors.message}
-                          />
-                        </FormControl>
-                        <FormMessage id="message-error" />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button 
-                    type="submit"
-                    disabled={form.formState.isSubmitting}
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-6 text-lg cyber-border animate-pulse-glow disabled:opacity-50 disabled:cursor-not-allowed font-orbitron"
-                    aria-label={form.formState.isSubmitting ? "Sending message" : "Send message"}
-                  >
-                    {form.formState.isSubmitting ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                        SENDING...
-                      </>
-                    ) : (
-                      "SEND MESSAGE"
-                    )}
-                  </Button>
-                </form>
-              </Form>
-            </div>
+            <ContactFormFields key={locale} />
 
             {/* Contact Info & Social */}
             <div className="space-y-8 animate-slide-in-right">
@@ -210,13 +235,13 @@ const Contact = () => {
                 <h3 
                   className="text-2xl font-bold text-foreground mb-6 font-orbitron"
                 >
-                  CONTACT INFO
+                  {t("contact.infoTitle")}
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 text-primary mt-1" aria-hidden="true" />
                     <div>
-                      <p className="text-sm text-muted-foreground uppercase tracking-wider mb-1">Email</p>
+                      <p className="text-sm text-muted-foreground uppercase tracking-wider mb-1">{t("contact.email")}</p>
                       <a 
                         href="mailto:tinkodev@gmail.com" 
                         className="text-foreground hover:text-primary transition-colors"
@@ -229,8 +254,8 @@ const Contact = () => {
                   <div className="flex items-start gap-3">
                     <Globe className="w-5 h-5 text-accent mt-1" aria-hidden="true" />
                     <div>
-                      <p className="text-sm text-muted-foreground uppercase tracking-wider mb-1">Location</p>
-                      <p className="text-foreground">Gyimesfelsőlok, Romania</p>
+                      <p className="text-sm text-muted-foreground uppercase tracking-wider mb-1">{t("contact.locationLabel")}</p>
+                      <p className="text-foreground">{t("contact.location")}</p>
                     </div>
                   </div>
                 </div>
@@ -241,7 +266,7 @@ const Contact = () => {
                 <h3 
                   className="text-2xl font-bold text-foreground mb-6 font-orbitron"
                 >
-                  FOLLOW ME
+                  {t("contact.followTitle")}
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   {socialLinks.map((social, index) => (
@@ -269,11 +294,11 @@ const Contact = () => {
                   <span 
                     className="text-lg font-bold text-foreground font-orbitron"
                   >
-                    AVAILABLE FOR WORK
+                    {t("contact.available")}
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Currently accepting new projects and collaborations
+                  {t("contact.availableDesc")}
                 </p>
               </div>
             </div>

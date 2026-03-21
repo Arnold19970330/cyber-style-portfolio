@@ -1,43 +1,51 @@
 import { Code2, Palette, Database, Zap, Globe, GitBranch } from "lucide-react";
+import { useI18n } from "@/i18n/context";
 
 const Skills = () => {
+  const { t } = useI18n();
+
   const skillCategories = [
     {
       icon: Code2,
-      title: "Frontend Development",
+      titleKey: "skills.categories.frontend" as const,
       skills: ["React", "TypeScript", "Next.js", "Vue.js", "Tailwind CSS", "SCSS"],
       color: "primary"
     },
     {
       icon: Palette,
-      title: "UI/UX Design",
+      titleKey: "skills.categories.uiux" as const,
       skills: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research", "Design Systems"],
       color: "accent"
     },
     {
       icon: Database,
-      title: "Backend & Database",
+      titleKey: "skills.categories.backend" as const,
       skills: ["Node.js", "PostgreSQL", "MongoDB", "GraphQL", "REST APIs", "Prisma", "Express", "PHP"],
       color: "cyber-purple"
     },
     {
       icon: Zap,
-      title: "Performance & Build Tools",
+      titleKey: "skills.categories.performance" as const,
       skills: ["Vite", "Webpack", "Lighthouse", "Web Vitals", "PWA", "SEO"],
       color: "primary"
     },
     {
       icon: Globe,
-      title: "DevOps & Deployment",
+      titleKey: "skills.categories.devops" as const,
       skills: ["Docker", "CI/CD", "Vercel", "GitHub Actions"],
       color: "accent"
     },
     {
       icon: GitBranch,
-      title: "Version Control & Collaboration",
+      titleKey: "skills.categories.version" as const,
       skills: ["Git", "GitHub", "GitLab", "Code Review", "Agile", "Scrum"],
       color: "cyber-purple"
     }
+  ];
+
+  const stats = [
+    { labelKey: "skills.stats.commits" as const, value: "10K+" },
+    { labelKey: "skills.stats.coffee" as const, value: "∞" },
   ];
 
   return (
@@ -50,16 +58,17 @@ const Skills = () => {
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-block mb-4">
               <span className="text-primary text-sm uppercase tracking-widest font-orbitron">
-                // Tech Stack
+                {t("skills.kicker")}
               </span>
             </div>
             <h2 
               className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
-              SKILLS & <span className="text-accent">EXPERTISE</span>
+              {t("skills.title")}
+              <span className="text-accent">{t("skills.titleAccent")}</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A comprehensive toolkit of modern technologies and frameworks for building exceptional digital experiences.
+              {t("skills.subtitle")}
             </p>
           </div>
 
@@ -79,7 +88,7 @@ const Skills = () => {
                   <h3 
                     className="text-xl font-bold text-foreground flex-1 group-hover:text-primary transition-colors font-orbitron"
                   >
-                    {category.title}
+                    {t(category.titleKey)}
                   </h3>
                 </div>
 
@@ -105,11 +114,7 @@ const Skills = () => {
 
           {/* Stats Section */}
           <div className="flex flex-wrap justify-center gap-6 mt-16 justify-items-center">
-            {[
-              /*{ label: "Happy Clients", value: "30+" },*/
-              { label: "Code Commits", value: "10K+" },
-              { label: "Coffee Consumed", value: "∞" }
-            ].map((stat, index) => (
+            {stats.map((stat, index) => (
               <div 
                 key={index}
                 className="text-center p-6 bg-card/50 border border-primary/20 hover:border-primary transition-all duration-300 animate-fade-in"
@@ -121,7 +126,7 @@ const Skills = () => {
                   {stat.value}
                 </div>
                 <div className="text-sm text-muted-foreground uppercase tracking-wider">
-                  {stat.label}
+                  {t(stat.labelKey)}
                 </div>
               </div>
             ))}

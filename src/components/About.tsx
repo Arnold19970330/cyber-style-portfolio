@@ -1,27 +1,30 @@
 import { Code2, Layers, Sparkles, Zap } from "lucide-react";
+import { useI18n } from "@/i18n/context";
 
 const About = () => {
+  const { t } = useI18n();
+
   const highlights = [
     {
       icon: Code2,
-      title: "Clean Code",
-      description: "Writing maintainable, scalable solutions"
+      titleKey: "about.highlights.cleanCode.title" as const,
+      descKey: "about.highlights.cleanCode.desc" as const,
     },
     {
       icon: Layers,
-      title: "Modern Design",
-      description: "Creating stunning user interfaces"
+      titleKey: "about.highlights.modernDesign.title" as const,
+      descKey: "about.highlights.modernDesign.desc" as const,
     },
     {
       icon: Sparkles,
-      title: "Innovation",
-      description: "Pushing boundaries with new tech"
+      titleKey: "about.highlights.innovation.title" as const,
+      descKey: "about.highlights.innovation.desc" as const,
     },
     {
       icon: Zap,
-      title: "Performance",
-      description: "Optimized for speed and efficiency"
-    }
+      titleKey: "about.highlights.performance.title" as const,
+      descKey: "about.highlights.performance.desc" as const,
+    },
   ];
 
   return (
@@ -34,13 +37,14 @@ const About = () => {
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-block mb-4">
               <span className="text-primary text-sm uppercase tracking-widest font-orbitron">
-                // About Me
+                {t("about.kicker")}
               </span>
             </div>
             <h2 
               className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
-              FRONTEND <span className="text-accent">DEVELOPER</span>
+              {t("about.title")}
+              <span className="text-accent">{t("about.titleAccent")}</span>
             </h2>
           </div>
 
@@ -50,15 +54,16 @@ const About = () => {
             <div className="space-y-6 animate-fade-in">
               <div className="border-l-2 border-primary pl-6">
                 <p className="text-lg text-foreground leading-relaxed mb-4">
-                  My passion is <span className="text-primary font-semibold">frontend development</span> and 
-                  using <span className="text-accent font-semibold">modern technologies</span>. I create web applications 
-                  that are not only beautiful, but also 
-                  <span className="text-cyber-purple font-semibold"> efficient</span> and user-friendly.
+                  {t("about.p1")}
+                  <span className="text-primary font-semibold">{t("about.p1a")}</span>
+                  {t("about.p1b")}
+                  <span className="text-accent font-semibold">{t("about.p1c")}</span>
+                  {t("about.p1d")}
+                  <span className="text-cyber-purple font-semibold">{t("about.p1e")}</span>
+                  {t("about.p1f")}
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I specialize in React and TypeScript-based development, where I use the latest tools and 
-                  libraries to create modern, scalable solutions. I believe that clean code and good UX 
-                  go hand in hand.
+                  {t("about.p2")}
                 </p>
               </div>
 
@@ -88,10 +93,10 @@ const About = () => {
                       <Code2 className="w-16 h-16 text-primary" />
                     </div>
                     <p className="text-2xl font-bold text-primary font-orbitron">
-                      5+ YEARS
+                      {t("about.years")}
                     </p>
                     <p className="text-muted-foreground uppercase text-sm tracking-wider">
-                      Experience
+                      {t("about.experience")}
                     </p>
                   </div>
                 </div>
@@ -111,10 +116,10 @@ const About = () => {
                 <h3 
                   className="text-lg font-bold mb-2 text-foreground font-orbitron"
                 >
-                  {item.title}
+                  {t(item.titleKey)}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {item.description}
+                  {t(item.descKey)}
                 </p>
               </div>
             ))}

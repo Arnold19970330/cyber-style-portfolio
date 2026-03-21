@@ -2,8 +2,10 @@ import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Home, AlertTriangle } from "lucide-react";
+import { useI18n } from "@/i18n/context";
 
 const NotFound = () => {
+  const { t } = useI18n();
   const location = useLocation();
 
   useEffect(() => {
@@ -25,17 +27,17 @@ const NotFound = () => {
         <div className="space-y-4">
           <h1 
             className="text-6xl md:text-8xl font-bold text-primary font-orbitron neon-text"
-            aria-label="404 Error"
+            aria-label={t("notFound.aria404")}
           >
             404
           </h1>
           <h2 
             className="text-2xl md:text-4xl font-bold text-foreground font-orbitron"
           >
-            PAGE NOT FOUND
+            {t("notFound.title")}
           </h2>
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+            {t("notFound.body")}
           </p>
         </div>
 
@@ -45,9 +47,9 @@ const NotFound = () => {
             size="lg"
             className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-6 text-lg cyber-border animate-pulse-glow font-orbitron"
           >
-            <Link to="/" aria-label="Return to home page">
+            <Link to="/" aria-label={t("notFound.ariaHome")}>
               <Home className="mr-2 h-5 w-5" aria-hidden="true" />
-              Return Home
+              {t("notFound.home")}
             </Link>
           </Button>
           <Button
@@ -55,18 +57,18 @@ const NotFound = () => {
             size="lg"
             onClick={() => window.history.back()}
             className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-6 text-lg font-orbitron"
-            aria-label="Go back to previous page"
+            aria-label={t("notFound.ariaBack")}
           >
-            Go Back
+            {t("notFound.back")}
           </Button>
         </div>
 
         <div className="mt-12 p-6 bg-card/50 border border-primary/20 rounded cyber-border">
           <p className="text-sm text-muted-foreground">
-            <span className="text-primary font-orbitron">// Error Details</span>
+            <span className="text-primary font-orbitron">{t("notFound.details")}</span>
             <br />
             <code className="text-xs mt-2 block font-mono text-foreground/70">
-              Route: {location.pathname}
+              {t("notFound.route")} {location.pathname}
             </code>
           </p>
         </div>
