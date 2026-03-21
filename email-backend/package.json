@@ -7,6 +7,6 @@
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
         "nodemailer": "^7.0.10",
-        "resend": "^6.5.2"
+        "resend": "^5.0.0"
     }
 }

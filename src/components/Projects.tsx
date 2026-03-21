@@ -91,6 +91,16 @@ const Projects = memo(() => {
       githubUrl: null,
       liveUrl: "https://transylvanianwonders.com/",
     },
+    {
+      title: "AI & PSYCHOLOGY RESEARCH",
+      category: "RESEARCH",
+      description:
+        "ESAS research portal for a psychology study on AI-assisted support: consent flow, multi-part questionnaire, secure handling, and participant-facing information.",
+      tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+      color: "primary",
+      githubUrl: null,
+      liveUrl: "https://airesearch.esas.hu/",
+    },
   ];
 
   return (
