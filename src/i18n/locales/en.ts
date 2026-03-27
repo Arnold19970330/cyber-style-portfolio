@@ -111,6 +111,12 @@ export const en = {
         description:
           "ESAS research portal: consent flow, multi-part questionnaire, secure handling, and participant information.",
       },
+      blogSystem: {
+        title: "BLOG SYSTEM",
+        category: "FULL STACK",
+        description:
+          "Node.js-based blog system with separate backend and frontend parts built with modern web technologies.",
+      },
     },
   },
   skills: {

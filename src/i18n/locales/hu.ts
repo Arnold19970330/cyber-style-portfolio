@@ -112,6 +112,12 @@ export const hu: Messages = {
         description:
           "ESAS kutatási portál: beleegyezés, többlépcsős kérdőív, biztonságos adatkezelés és résztvevői információ.",
       },
+      blogSystem: {
+        title: "BLOG RENDSZER",
+        category: "FULL STACK",
+        description:
+          "Node.js alapú blogrendszer külön backend és frontend résszel, modern webes technológiákkal.",
+      },
     },
   },
   skills: {

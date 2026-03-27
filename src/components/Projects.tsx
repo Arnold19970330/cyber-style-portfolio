@@ -53,6 +53,13 @@ const PROJECT_DEFS = [
     liveUrl: "https://airesearch.esas.hu/",
     tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
   },
+  {
+    id: "blogSystem" as const,
+    color: "accent",
+    githubUrl: "https://github.com/Arnold19970330/blog-system-nodejs",
+    liveUrl: null,
+    tech: ["Node.js", "Express", "React", "TypeScript", "JavaScript"],
+  },
 ];
 
 const Projects = memo(() => {
