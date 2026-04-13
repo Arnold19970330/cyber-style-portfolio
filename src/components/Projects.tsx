@@ -4,6 +4,20 @@ import { Button } from "@/components/ui/button";
 import { useI18n } from "@/i18n/context";
 
 const PROJECT_DEFS = [
+   {
+    id: "aiResearch" as const,
+    color: "primary",
+    githubUrl: null,
+    liveUrl: "https://airesearch.esas.hu/",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+  },
+  {
+    id: "aiHasznalat" as const,
+    color: "primary",
+    githubUrl: null,
+    liveUrl: "https://www.aihasznalat.com/",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Nodejs", "Mongodb", "Resend", "Railway", "Vercel"],
+  },
   {
     id: "weather" as const,
     color: "primary",
@@ -45,27 +59,6 @@ const PROJECT_DEFS = [
     githubUrl: null,
     liveUrl: "https://transylvanianwonders.com/",
     tech: ["Laravel", "Alpine.js", "PHP", "SQLite", "HTML"],
-  },
-  {
-    id: "aiResearch" as const,
-    color: "primary",
-    githubUrl: null,
-    liveUrl: "https://airesearch.esas.hu/",
-    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-  },
-  {
-    id: "blogSystem" as const,
-    color: "accent",
-    githubUrl: "https://github.com/Arnold19970330/blog-system-nodejs",
-    liveUrl: null,
-    tech: ["Node.js", "Express", "React", "TypeScript", "JavaScript"],
-  },
-  {
-    id: "aiHasznalat" as const,
-    color: "primary",
-    githubUrl: null,
-    liveUrl: "https://www.aihasznalat.com/",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
   },
 ];
 
