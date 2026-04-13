@@ -22,7 +22,7 @@ const PROJECT_DEFS = [
     id: "weather" as const,
     color: "primary",
     githubUrl: "https://github.com/Arnold19970330/react-weather-app",
-    liveUrl: null as string | null,
+    liveUrl: "https://react-weather-ndr0zjqjo-arnold19970330s-projects.vercel.app",
     tech: ["React", "TypeScript", "OpenWeatherMap API", "Tailwind CSS", "Vite"],
   },
   {
