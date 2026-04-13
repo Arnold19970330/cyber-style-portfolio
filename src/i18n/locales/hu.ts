@@ -118,6 +118,12 @@ export const hu: Messages = {
         description:
           "Node.js alapú blogrendszer külön backend és frontend résszel, modern webes technológiákkal.",
       },
+      aiHasznalat: {
+        title: "AI HASZNÁLAT",
+        category: "WEB APP",
+        description:
+          "AI eszközök könyvtára és blog – fedezd fel a legjobb mesterséges intelligencia eszközöket, útmutatókat és híreket egy helyen.",
+      },
     },
   },
   skills: {

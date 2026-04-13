@@ -60,6 +60,13 @@ const PROJECT_DEFS = [
     liveUrl: null,
     tech: ["Node.js", "Express", "React", "TypeScript", "JavaScript"],
   },
+  {
+    id: "aiHasznalat" as const,
+    color: "primary",
+    githubUrl: null,
+    liveUrl: "https://www.aihasznalat.com/",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+  },
 ];
 
 const Projects = memo(() => {

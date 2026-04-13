@@ -117,6 +117,12 @@ export const en = {
         description:
           "Node.js-based blog system with separate backend and frontend parts built with modern web technologies.",
       },
+      aiHasznalat: {
+        title: "AI USAGE",
+        category: "WEB APP",
+        description:
+          "AI tools directory and blog featuring the best artificial intelligence tools, guides, and news in one place.",
+      },
     },
   },
   skills: {
