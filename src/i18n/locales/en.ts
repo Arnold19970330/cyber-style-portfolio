@@ -214,6 +214,6 @@ export const en = {
     retry: "Try Again",
     home: "Go Home",
   },
-} as const;
+};
 
 export type Messages = typeof en;
