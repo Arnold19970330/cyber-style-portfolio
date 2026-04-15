@@ -36,7 +36,7 @@ const PROJECT_DEFS = [
     id: "movie" as const,
     color: "cyber-purple",
     githubUrl: "https://github.com/Arnold19970330/react-movie-app",
-    liveUrl: null,
+    liveUrl: "https://react-movie-app-one-gilt.vercel.app/",
     tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
   },
   {
