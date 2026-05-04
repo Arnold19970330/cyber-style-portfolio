@@ -212,9 +212,9 @@ const Contact = () => {
                 {t("contact.kicker")}
               </span>
             </div>
-            <h2 
+            <h2
               id="contact-heading"
-              className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
               {t("contact.title")}
               <span className="text-accent">{t("contact.titleAccent")}</span>

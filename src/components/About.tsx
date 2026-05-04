@@ -40,8 +40,8 @@ const About = () => {
                 {t("about.kicker")}
               </span>
             </div>
-            <h2 
-              className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
               {t("about.title")}
               <span className="text-accent">{t("about.titleAccent")}</span>

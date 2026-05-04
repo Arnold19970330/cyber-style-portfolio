@@ -46,15 +46,15 @@ const Navigation = () => {
         aria-label={t("navAria.main")}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-16 md:h-20 gap-2">
             {/* Logo */}
-            <a 
-              href="#" 
+            <a
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection("#");
               }}
-              className="lg:text-2xl text-xl font-bold neon-text cursor-pointer font-orbitron"
+              className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold neon-text cursor-pointer font-orbitron whitespace-nowrap flex-shrink min-w-0"
               aria-label={t("navAria.logo")}
             >
               <span className="text-primary">&lt;</span>
@@ -65,7 +65,7 @@ const Navigation = () => {
             </a>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-8">
+            <div className="hidden md:flex items-center gap-6 lg:gap-8 flex-shrink-0">
               {navItems.map((item, index) => (
                 <a
                   key={index}
@@ -86,20 +86,20 @@ const Navigation = () => {
               <LanguageSwitcher />
             </div>
 
-            <div className="flex md:hidden items-center gap-2">
+            {/* Mobile right side */}
+            <div className="flex md:hidden items-center gap-1.5 flex-shrink-0">
               <LanguageSwitcher />
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden text-primary"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? t("navAria.closeMenu") : t("navAria.openMenu")}
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-menu"
-            >
-              {isMobileMenuOpen ? <X size={28} aria-hidden="true" /> : <Menu size={28} aria-hidden="true" />}
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-primary px-2"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? t("navAria.closeMenu") : t("navAria.openMenu")}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
+              >
+                {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+              </Button>
             </div>
           </div>
         </div>

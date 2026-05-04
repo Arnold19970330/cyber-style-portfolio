@@ -126,8 +126,8 @@ const Projects = memo(() => {
                 {t("projects.kicker")}
               </span>
             </div>
-            <h2 
-              className="text-4xl md:text-6xl font-bold mb-6 neon-text font-orbitron"
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 neon-text font-orbitron"
             >
               {t("projects.title")}
               <span className="text-accent">{t("projects.titleAccent")}</span>
