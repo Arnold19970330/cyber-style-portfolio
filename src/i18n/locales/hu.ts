@@ -88,6 +88,12 @@ export const hu: Messages = {
         description:
           "Filmek böngészése és keresése részletes információkkal.",
       },
+      quizGenerator: {
+        title: "AI KVÍZGENERÁTOR",
+        category: "FULL STACK",
+        description:
+          "AI-alapú kvízgenerátor, amely az Anthropic API segítségével bármilyen témában egyedi kvízeket készít, MongoDB tárolással és React frontenddel.",
+      },
       harryPotter: {
         title: "HARRY POTTER KVÍZ",
         category: "FULL STACK",

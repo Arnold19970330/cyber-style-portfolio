@@ -87,6 +87,12 @@ export const en = {
         description:
           "Browse and discover movies with search and detailed information.",
       },
+      quizGenerator: {
+        title: "AI QUIZ GENERATOR",
+        category: "FULL STACK",
+        description:
+          "AI-powered quiz generator that creates custom quizzes on any topic using the Anthropic API, with MongoDB storage and a full React frontend.",
+      },
       harryPotter: {
         title: "HARRY POTTER QUIZ",
         category: "FULL STACK",

@@ -19,6 +19,13 @@ const PROJECT_DEFS = [
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Nodejs", "Mongodb", "Resend", "Railway", "Vercel"],
   },
   {
+    id: "quizGenerator" as const,
+    color: "accent",
+    githubUrl: null,
+    liveUrl: "https://www.kvizgenerator.hu/",
+    tech: ["Node.js", "Express", "TypeScript", "React", "MongoDB", "Anthropic"],
+  },
+  {
     id: "weather" as const,
     color: "primary",
     githubUrl: "https://github.com/Arnold19970330/react-weather-app",
