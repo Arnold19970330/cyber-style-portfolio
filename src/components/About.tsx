@@ -77,7 +77,16 @@ const About = () => {
                 <span className="px-4 py-2 bg-secondary border border-cyber-purple/30 text-cyber-purple text-sm font-medium font-orbitron">
                   TAILWIND
                 </span>
-                <span className="px-4 py-2 bg-secondary border border-primary/30 text-primary text-sm font-medium font-orbitron">
+                <span className="px-4 py-2 bg-secondary border border-neon-orange/30 text-neon-orange text-sm font-medium font-orbitron">
+                  MONGODB
+                </span>
+                <span className="px-4 py-2 bg-secondary border border-destructive/30 text-destructive text-sm font-medium font-orbitron">
+                  NODEJS
+                </span>
+                <span className="px-4 py-2 bg-secondary border border-green-400/30 text-green-400 text-sm font-medium font-orbitron">
+                  EXPRESS
+                </span>
+                <span className="px-4 py-2 bg-secondary border border-pink-400/30 text-pink-400 text-sm font-medium font-orbitron">
                   FIGMA
                 </span>
               </div>

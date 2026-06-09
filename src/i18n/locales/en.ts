@@ -42,10 +42,10 @@ export const en = {
   },
   about: {
     kicker: "// About Me",
-    title: "FRONTEND ",
+    title: "FULL STACK ",
     titleAccent: "DEVELOPER",
     p1: "My passion is ",
-    p1a: "frontend development",
+    p1a: "full stack development",
     p1b: " and using ",
     p1c: "modern technologies",
     p1d:

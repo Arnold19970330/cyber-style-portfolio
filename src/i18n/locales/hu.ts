@@ -44,10 +44,10 @@ export const hu: Messages = {
   },
   about: {
     kicker: "// Rólam",
-    title: "FRONTEND ",
+    title: "FULL STACK ",
     titleAccent: "FEJLESZTŐ",
     p1: "A szenvedélyem a ",
-    p1a: "frontend fejlesztés",
+    p1a: "full stack fejlesztés",
     p1b: ", és szeretek ",
     p1c: "modern technológiákkal",
     p1d: " dolgozni. Olyan webalkalmazásokat készítek, amelyek nemcsak szépek, hanem ",
