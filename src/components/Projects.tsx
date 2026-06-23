@@ -15,7 +15,7 @@ const PROJECT_DEFS = [
     id: "aiHasznalat" as const,
     color: "primary",
     githubUrl: null,
-    liveUrl: "https://www.aihasznalat.com/",
+    liveUrl: "https://blog-system-nodejs-9zg7hxfdv-arnold19970330s-projects.vercel.app/",
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Nodejs", "Mongodb", "Resend", "Railway", "Vercel"],
   },
   {
