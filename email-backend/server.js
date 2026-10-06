@@ -2,6 +2,7 @@ import express from "express";
 import { Resend } from "resend";
 import cors from "cors";
 import dotenv from "dotenv";
+import { ownerNotification, senderConfirmation } from "./templates.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // ezért a látogatónak szóló visszaigazolás csak hitelesített domainnel (RESEND_FROM) megy ki.
 const FROM_ADDRESS = process.env.RESEND_FROM || "Portfolio Contact <onboarding@resend.dev>";
 const CAN_SEND_CONFIRMATION = Boolean(process.env.RESEND_FROM);
+const OWNER_EMAIL = "tinkodev@gmail.com";
 
 // Ébresztő végpont: a frontend oldalbetöltéskor meghívja, hogy az alvó szerver
 // mire az űrlapot elküldik, már fusson
@@ -30,16 +32,8 @@ app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
 
-const escapeHtml = (value = "") =>
-  value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
 app.post("/contact", async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, message, locale } = req.body;
 
   console.log("📧 Email küldési kérés érkezett:", { name, email, message: message?.substring(0, 50) + "..." });
 
@@ -56,63 +50,27 @@ app.post("/contact", async (req, res) => {
     return res.status(400).json({ error: "Érvénytelen email cím formátum!" });
   }
 
-  const safeName = escapeHtml(name.trim());
-  const safeEmail = escapeHtml(email.trim());
-  const safeMessage = escapeHtml(message.trim()).replace(/\n/g, "<br>");
+  const cleanName = name.trim();
+  const cleanEmail = email.trim();
+  const cleanMessage = message.trim();
 
   try {
-    // Levél küldése neked (portfolio owner)
+    // Levél küldése neked (portfolio owner) - MINDIG ide megy, függetlenül attól, hogy mi van a form-ban!
     const ownerEmailData = {
       from: FROM_ADDRESS,
-      
-      // Ide érkezzen meg a levél (a te saját Gmail címed) - MINDIG ide megy, függetlenül attól, hogy mi van a form-ban!
-      to: ["tinkodev@gmail.com"], 
-      
+      to: [OWNER_EMAIL],
       // Ha válaszolsz a levélre, az a látogatónak menjen (a form-ban beírt email)
-      reply_to: email, 
-      
-      subject: `Új üzenet tőle: ${name}`,
-      html: `
-        <div style="margin:0;padding:24px;background:#070b14;color:#e6f1ff;font-family:Arial,sans-serif;">
-          <div style="max-width:640px;margin:0 auto;border:1px solid #00f6ff;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#0b1220 0%,#070b14 100%);box-shadow:0 0 24px rgba(0,246,255,0.25);">
-            <div style="padding:20px 24px;border-bottom:1px solid rgba(0,246,255,0.35);">
-              <h2 style="margin:0;color:#00f6ff;font-size:24px;letter-spacing:1px;">NEW CONTACT SIGNAL</h2>
-              <p style="margin:8px 0 0;color:#9fb3c8;">Cyber Portfolio Interface</p>
-            </div>
-            <div style="padding:22px 24px;">
-              <p style="margin:0 0 12px;"><strong style="color:#00f6ff;">Név:</strong> ${safeName}</p>
-              <p style="margin:0 0 12px;"><strong style="color:#00f6ff;">Email:</strong> ${safeEmail}</p>
-              <p style="margin:16px 0 8px;color:#8aa2be;">Üzenet:</p>
-              <div style="background:#0e1828;border:1px solid rgba(0,246,255,0.25);border-radius:10px;padding:14px;line-height:1.6;color:#e6f1ff;">
-                ${safeMessage}
-              </div>
-            </div>
-          </div>
-        </div>
-      `,
+      reply_to: cleanEmail,
+      ...ownerNotification({ name: cleanName, email: cleanEmail, message: cleanMessage }),
     };
 
-    // Automatikus visszaigazoló levél a feladónak
+    // Automatikus visszaigazoló levél a feladónak, az oldalon kiválasztott nyelven
     const senderConfirmationEmailData = {
       from: FROM_ADDRESS,
-      to: [email],
-      subject: "Köszönöm a megkeresést! | Cyber Portfolio",
-      html: `
-        <div style="margin:0;padding:24px;background:#070b14;color:#e6f1ff;font-family:Arial,sans-serif;">
-          <div style="max-width:640px;margin:0 auto;border:1px solid #ff00d4;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#13071a 0%,#070b14 100%);box-shadow:0 0 24px rgba(255,0,212,0.22);">
-            <div style="padding:20px 24px;border-bottom:1px solid rgba(255,0,212,0.35);">
-              <h2 style="margin:0;color:#ff00d4;font-size:24px;letter-spacing:1px;">MESSAGE RECEIVED</h2>
-              <p style="margin:8px 0 0;color:#b8a2c5;">Visszaigazolás a megkeresésedről</p>
-            </div>
-            <div style="padding:22px 24px;line-height:1.6;">
-              <p style="margin:0 0 12px;">Szia ${safeName}!</p>
-              <p style="margin:0 0 12px;">Köszönöm a megkeresésedet, az üzeneted megérkezett hozzám.</p>
-              <p style="margin:0 0 12px;">Hamarosan válaszolok a lehető legrövidebb időn belül.</p>
-              <p style="margin:20px 0 0;color:#9fb3c8;">- Tinko / Cyber Portfolio</p>
-            </div>
-          </div>
-        </div>
-      `,
+      to: [cleanEmail],
+      // Ha az ügyfél válaszol a visszaigazolásra, az hozzád érkezzen
+      reply_to: OWNER_EMAIL,
+      ...senderConfirmation({ name: cleanName, message: cleanMessage, locale, replyEmail: OWNER_EMAIL }),
     };
 
     console.log("📤 Email küldése...", {

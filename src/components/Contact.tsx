@@ -19,7 +19,7 @@ type ContactFormValues = {
 
 /** Remount on locale change so zod resolver messages match the active language. */
 function ContactFormFields() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
   const contactFormSchema = useMemo(
     () =>
@@ -60,7 +60,7 @@ function ContactFormFields() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, locale }),
       });
 
       // Check if response is JSON
