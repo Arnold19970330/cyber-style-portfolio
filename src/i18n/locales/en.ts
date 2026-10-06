@@ -69,6 +69,9 @@ export const en = {
     titleAccent: "PROJECTS",
     subtitle:
       "Explore a selection of my recent work: web development, UI/UX, and modern tooling.",
+    live: "Live site",
+    code: "Source code",
+    screenshotAlt: "Screenshot of {{title}}",
     items: {
       weather: {
         title: "WEATHER APP",

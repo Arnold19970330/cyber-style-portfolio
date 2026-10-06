@@ -70,6 +70,9 @@ export const hu: Messages = {
     titleAccent: "PROJEKTEK",
     subtitle:
       "Válogatás a legutóbbi munkáimból: webfejlesztés, UI/UX és modern eszközök.",
+    live: "Élő oldal",
+    code: "Forráskód",
+    screenshotAlt: "Képernyőkép: {{title}}",
     items: {
       weather: {
         title: "IDŐJÁRÁS ALKALMAZÁS",
