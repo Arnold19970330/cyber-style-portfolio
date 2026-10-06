@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -28,7 +28,7 @@ function ContactFormFields() {
           .string()
           .min(2, t("contact.validation.nameMin"))
           .max(50, t("contact.validation.nameMax"))
-          .regex(/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s'-]+$/i, t("contact.validation.namePattern")),
+          .regex(/^[\p{L}\p{M}\s.'-]+$/u, t("contact.validation.namePattern")),
         email: z
           .string()
           .email(t("contact.validation.email"))
@@ -191,6 +191,11 @@ function ContactFormFields() {
 
 const Contact = () => {
   const { t, locale } = useI18n();
+
+  // Wake the sleeping backend early so the form submit doesn't hit a cold start
+  useEffect(() => {
+    fetch(getApiUrl("/health")).catch(() => {});
+  }, []);
 
   const socialLinks = [
     { icon: Github, label: "GitHub", href: "https://github.com/Arnold19970330?tab=repositories", color: "primary" },

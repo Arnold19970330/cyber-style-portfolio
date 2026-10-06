@@ -182,7 +182,7 @@ export const en = {
     validation: {
       nameMin: "Name must be at least 2 characters",
       nameMax: "Name must be less than 50 characters",
-      namePattern: "Name can only contain letters, spaces, hyphens, and apostrophes",
+      namePattern: "Name can only contain letters, spaces, periods, hyphens, and apostrophes",
       email: "Please enter a valid email address",
       emailMin: "Email must be at least 5 characters",
       emailMax: "Email must be less than 100 characters",

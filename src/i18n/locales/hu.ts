@@ -183,7 +183,7 @@ export const hu: Messages = {
     validation: {
       nameMin: "A név legalább 2 karakter legyen",
       nameMax: "A név legfeljebb 50 karakter lehet",
-      namePattern: "A név csak betűket, szóközt, kötőjelet és aposztrófot tartalmazhat",
+      namePattern: "A név csak betűket, szóközt, pontot, kötőjelet és aposztrófot tartalmazhat",
       email: "Adj meg érvényes e-mail címet",
       emailMin: "Az e-mail legalább 5 karakter legyen",
       emailMax: "Az e-mail legfeljebb 100 karakter lehet",

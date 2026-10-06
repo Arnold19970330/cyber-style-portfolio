@@ -19,6 +19,17 @@ app.use(express.json());
 // Resend inicializálása a kulccsal
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// A teszt-feladó (onboarding@resend.dev) csak a Resend fiók saját címére tud küldeni,
+// ezért a látogatónak szóló visszaigazolás csak hitelesített domainnel (RESEND_FROM) megy ki.
+const FROM_ADDRESS = process.env.RESEND_FROM || "Portfolio Contact <onboarding@resend.dev>";
+const CAN_SEND_CONFIRMATION = Boolean(process.env.RESEND_FROM);
+
+// Ébresztő végpont: a frontend oldalbetöltéskor meghívja, hogy az alvó szerver
+// mire az űrlapot elküldik, már fusson
+app.get("/health", (req, res) => {
+  res.status(200).json({ ok: true });
+});
+
 const escapeHtml = (value = "") =>
   value
     .replace(/&/g, "&amp;")
@@ -52,9 +63,7 @@ app.post("/contact", async (req, res) => {
   try {
     // Levél küldése neked (portfolio owner)
     const ownerEmailData = {
-      // FONTOS: Itt a SAJÁT domainedet kell használni, amit a Resend-en beállítottál!
-      // Példa: "onboarding@resend.dev" (teszteléshez) vagy "contact@te-domained.com"
-      from: "Portfolio Contact <onboarding@resend.dev>", 
+      from: FROM_ADDRESS,
       
       // Ide érkezzen meg a levél (a te saját Gmail címed) - MINDIG ide megy, függetlenül attól, hogy mi van a form-ban!
       to: ["tinkodev@gmail.com"], 
@@ -85,7 +94,7 @@ app.post("/contact", async (req, res) => {
 
     // Automatikus visszaigazoló levél a feladónak
     const senderConfirmationEmailData = {
-      from: "Portfolio Contact <onboarding@resend.dev>",
+      from: FROM_ADDRESS,
       to: [email],
       subject: "Köszönöm a megkeresést! | Cyber Portfolio",
       html: `
@@ -110,37 +119,45 @@ app.post("/contact", async (req, res) => {
       ownerTo: ownerEmailData.to,
       reply_to: ownerEmailData.reply_to,
       ownerSubject: ownerEmailData.subject,
-      confirmationTo: senderConfirmationEmailData.to,
+      confirmationTo: CAN_SEND_CONFIRMATION ? senderConfirmationEmailData.to : "(kihagyva, nincs RESEND_FROM)",
     });
 
-    const [ownerResult, senderResult] = await Promise.all([
-      resend.emails.send(ownerEmailData),
-      resend.emails.send(senderConfirmationEmailData),
-    ]);
-
+    const ownerResult = await resend.emails.send(ownerEmailData);
     console.log("📬 Resend API válasz (owner):", JSON.stringify(ownerResult, null, 2));
-    console.log("📬 Resend API válasz (sender):", JSON.stringify(senderResult, null, 2));
-    
-    if (ownerResult.error || senderResult.error) {
-        console.error("❌ Resend API hiba:", JSON.stringify({
-          ownerError: ownerResult.error || null,
-          senderError: senderResult.error || null
-        }, null, 2));
-        return res.status(500).json({ 
-          error: "Hiba történt az email küldésekor.", 
-          details: ownerResult.error?.message || senderResult.error?.message || "Ismeretlen hiba" 
-        });
+
+    // Csak a neked szóló levél hibája számít sikertelen küldésnek
+    if (ownerResult.error) {
+      console.error("❌ Resend API hiba (owner):", JSON.stringify(ownerResult.error, null, 2));
+      return res.status(500).json({
+        error: "Hiba történt az email küldésekor.",
+        details: ownerResult.error.message || "Ismeretlen hiba"
+      });
     }
 
-    console.log("✅ Mindkét email sikeresen elküldve!", {
-      ownerId: ownerResult.id,
-      senderId: senderResult.id
+    // A visszaigazolás hibája nem akadályozhatja meg, hogy a látogató sikert lásson
+    let confirmationId = null;
+    if (CAN_SEND_CONFIRMATION) {
+      try {
+        const senderResult = await resend.emails.send(senderConfirmationEmailData);
+        if (senderResult.error) {
+          console.error("⚠️ Visszaigazolás nem ment ki:", JSON.stringify(senderResult.error, null, 2));
+        } else {
+          confirmationId = senderResult.data?.id ?? null;
+        }
+      } catch (confirmationError) {
+        console.error("⚠️ Visszaigazolás nem ment ki:", confirmationError.message);
+      }
+    }
+
+    console.log("✅ Email sikeresen elküldve!", {
+      ownerId: ownerResult.data?.id,
+      confirmationId
     });
     res.status(200).json({
       success: true,
-      message: "Email elküldve, visszaigazolás kiküldve!",
-      id: ownerResult.id,
-      confirmationId: senderResult.id
+      message: "Email elküldve!",
+      id: ownerResult.data?.id,
+      confirmationId
     });
 
   } catch (error) {
